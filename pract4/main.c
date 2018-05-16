@@ -9,8 +9,7 @@
 #define FACTOR ( (unsigned char) ( 255/(N+M-2) ) )
 
 // Defincion de funciones y variables declaradas en ensamblador
-
-extern void contarUnos (int, int, int, int);
+extern void contarUnos (int mat[N][M], int vector[], int nfilas, int ncols);
 
 //---------------------------------------------------------------
 
