@@ -8,16 +8,15 @@
 
 #define FACTOR ( (unsigned char) ( 255/(N+M-2) ) )
 
-// Defincion de funciones y variables declaradas en ensamblador
-extern void contarUnos (int mat[N][M], int vector[], int nfilas, int ncols);
 
-//---------------------------------------------------------------
+extern int contarUnos (int mat[N][M], int vector[N], int, int);
 
 
 pixelRGB imagenRGB[N][M];
 int imagenGris[N][M];
 int imagenBinaria[N][M];
 int unosPorFila[N];
+int sumaUnos;
 
 void initRGB(pixelRGB m[N][M], int nfilas, int ncols) {
 
@@ -50,7 +49,9 @@ int main() {
 
     // Contar los unos que aparecen por filas en la matriz de blanco y negro
 
-    contarUnos(imagenBinaria,unosPorFila,N,M);
+    sumaUnos = contarUnos(imagenBinaria,unosPorFila,N,M);
+
+
 
     return 0;
 }

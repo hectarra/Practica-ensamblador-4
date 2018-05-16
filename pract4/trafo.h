@@ -19,6 +19,6 @@ void Gray2BinaryMatrix(int orig[N][M], int dest[N][M], int nfilas, int ncols);
 
 int rgb2gray(pixelRGB pixel);
 
-void contarUnos(int mat[N][M], int vector[], int nfilas, int ncols);
+int contarUnos(int mat[N][M], int vector[], int nfilas, int ncols);
 
 #endif

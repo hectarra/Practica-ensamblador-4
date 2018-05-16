@@ -34,6 +34,16 @@ int rgb2gray(pixelRGB pixel) {
     return  ( (2126*pixel.R + 7152*pixel.G + 722*pixel.B) /10000);
 }
 
+extern int sumarUnos(int vector[], int nfilas) {
+	int i, suma;
+	suma = 0;
+
+	for (i=0;i<nfilas;i++){
+		suma = suma + vector[i];
+	}
+
+	return suma;
+}
 
 /*void contarUnos(int mat[N][M], int vector[], int nfilas, int ncols) {
     int i,j;

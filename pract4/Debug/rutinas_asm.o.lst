@@ -1,0 +1,82 @@
+   1              	# 1 "../rutinas_asm.asm"
+   1              	/*-----------------------------------------------------------------
+   0              	
+   0              	
+   0              	
+   2              	**
+   3              	**  Fichero:
+   4              	**    rutinas_asm.asm  10/6/2014
+   5              	**
+   6              	**    Fundamentos de Computadores
+   7              	**    Dpto. de Arquitectura de Computadores y Automática
+   8              	**    Facultad de Informática. Universidad Complutense de Madrid
+   9              	**
+  10              	**
+  11              	**
+  12              	**  Notas de diseño:
+  13              	**
+  14              	**---------------------------------------------------------------*/
+  15              	
+  16              	.global contarUnos
+  17              	.extern sumarUnos
+  18              	
+  19              	.text
+  20              	
+  21              	contarUnos:
+  22 0000 F04F2DE9 	push {r4-r10, fp, lr}
+  23 0004 28B08DE2 			add fp, sp, #40 		@ 40 = 4*11-4
+  24 0008 0040A0E1 			mov r4, r0				@ R4, direccion de inicio matriz
+  25 000c 0150A0E1 			mov r5, r1				@ R5, direccion de inicio de vector
+  26 0010 0260A0E1 			mov r6, r2				@ R6, numero de filas
+  27 0014 0370A0E1 			mov r7, r3				@ R7, numero de columnas
+  28 0018 0000A0E3 			mov r0, #0				@ R0, i
+  29 001c 0010A0E3 			mov r1, #0				@ R1, j
+  30 0020 0020A0E3 			mov r2, #0
+  31 0024 960702E0 			mul r2, r6, r7
+  32              	
+  33              	for_filas:
+  34 0028 060050E1 			cmp r0, r6					@ Comparar i con filas
+  35 002c 0F0000AA 			bge fin						@ Cuando acabe salta a fin
+  36 0030 008195E7 			ldr r8, [r5, r0, lsl #2]	@ Mueve v[i] a registro
+  37 0034 0080A0E3 			mov r8, #0					@ Mueve un 0 a v[i]
+  38              	
+  39              	for_cols:
+  40 0038 070051E1 			cmp r1,r7					@ Compara j con columnas
+  41 003c 070000AA 			bge add_i					@ Cuando acabe salta a sumar uno a i
+  42 0040 971023E0 			mla r3, r7, r0, r1			@ Posicion de acceso a matriz, columnas * i + j
+  43 0044 039194E7 			ldr r9, [r4, r3, lsl #2]	@ Cargar en r9 posicion de matriz
+  44 0048 010059E3 			cmp r9, #1					@ Comprar posicion matriz con 1
+  45 004c 0100000A 			beq add_v					@ Si se cumple salta a add_v
+  46              	ret_add_v:
+  47 0050 011081E2 	    add r1, r1, #1 @ Suma uno a la j
+  48 0054 F7FFFFEA 	    b for_cols
+  49              	
+  50              	add_v:
+  51 0058 018088E2 			add r8, r8, #1			@ Sumar uno a la posicion v[i]
+  52 005c FBFFFFEA 			b ret_add_v				@ Vuelve a posicion inicial
+  53              	
+  54              	add_i:
+  55 0060 008185E7 			str r8, [r5, r0, lsl #2]	@ Guarda en memoria v[i]
+  56 0064 0010A0E3 			mov r1, #0					@ Pone a 0 j
+  57 0068 010080E2 			add r0, r0, #1				@ Suma uno a i
+  58 006c EDFFFFEA 			b for_filas					@ Vuelve al for_filas
+  59              	
+  60              	fin:
+  61 0070 0500A0E1 			mov r0, r5				@ Mover a r0 inicio vector
+  62 0074 0710A0E1 			mov r1, r7				@ Tamaño del vector a r1
+  63 0078 FEFFFFEB 			bl sumarUnos			@ Salto a subrutina
+  64 007c F04FBDE8 			pop {r4-r10, fp, lr}
+  65 0080 0EF0A0E1 			mov pc, lr
+DEFINED SYMBOLS
+  ../rutinas_asm.asm:21     .text:00000000 contarUnos
+  ../rutinas_asm.asm:22     .text:00000000 $a
+  ../rutinas_asm.asm:33     .text:00000028 for_filas
+  ../rutinas_asm.asm:60     .text:00000070 fin
+  ../rutinas_asm.asm:39     .text:00000038 for_cols
+  ../rutinas_asm.asm:54     .text:00000060 add_i
+  ../rutinas_asm.asm:50     .text:00000058 add_v
+  ../rutinas_asm.asm:46     .text:00000050 ret_add_v
+                   .debug_aranges:0000000c $d
+
+UNDEFINED SYMBOLS
+sumarUnos

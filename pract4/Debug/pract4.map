@@ -1,0 +1,156 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+imagenRGB           0x180             ./main.o
+imagenBinaria       0x80              ./main.o
+sumaUnos            0x4               ./main.o
+unosPorFila         0x20              ./main.o
+imagenGris          0x80              ./main.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD ./init.o
+LOAD ./main.o
+LOAD ./rutinas_asm.o
+LOAD ./trafo.o
+START GROUP
+LOAD c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2\libgcc.a
+LOAD c:/software/electronica/arm/eclipsearm/sourcery-g++-lite-arm-2011.03/bin/../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/lib\libc.a
+END GROUP
+                0x0c000000                . = 0xc000000
+
+.data           0x0c000000        0x0
+ *(.data)
+ .data          0x0c000000        0x0 ./init.o
+ .data          0x0c000000        0x0 ./main.o
+ .data          0x0c000000        0x0 ./rutinas_asm.o
+ .data          0x0c000000        0x0 ./trafo.o
+ *(.rodata)
+
+.bss            0x0c000000      0x2a4
+ *(.bss)
+ .bss           0x0c000000        0x0 ./init.o
+ .bss           0x0c000000        0x0 ./main.o
+ .bss           0x0c000000        0x0 ./rutinas_asm.o
+ .bss           0x0c000000        0x0 ./trafo.o
+ *(COMMON)
+ COMMON         0x0c000000      0x2a4 ./main.o
+                0x0c000000                imagenRGB
+                0x0c000180                imagenBinaria
+                0x0c000200                sumaUnos
+                0x0c000204                unosPorFila
+                0x0c000224                imagenGris
+
+.text           0x0c0002a4      0x340
+ *(.text)
+ .text          0x0c0002a4       0x14 ./init.o
+                0x0c0002a4                start
+ .text          0x0c0002b8      0x100 ./main.o
+                0x0c0002b8                initRGB
+                0x0c000328                main
+ .text          0x0c0003b8       0x84 ./rutinas_asm.o
+                0x0c0003b8                contarUnos
+ .text          0x0c00043c      0x1a8 ./trafo.o
+                0x0c00043c                Gray2BinaryMatrix
+                0x0c0004c8                rgb2gray
+                0x0c000524                RGB2GrayMatrix
+                0x0c0005b0                sumarUnos
+                0x0c0005e4                PROVIDE (end, .)
+                0x0c7ff000                PROVIDE (_stack, 0xc7ff000)
+OUTPUT(pract4.elf elf32-littlearm)
+
+.glue_7         0x0c0005e4        0x0
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x0c0005e4        0x0
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x0c0005e4        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x0c0005e4        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.ARM.attributes
+                0x00000000       0x2e
+ .ARM.attributes
+                0x00000000       0x22 ./init.o
+ .ARM.attributes
+                0x00000022       0x32 ./main.o
+ .ARM.attributes
+                0x00000054       0x22 ./rutinas_asm.o
+ .ARM.attributes
+                0x00000076       0x32 ./trafo.o
+
+.comment        0x00000000       0x2a
+ .comment       0x00000000       0x2a ./main.o
+                                 0x2b (size before relaxing)
+ .comment       0x00000000       0x2b ./trafo.o
+
+.debug_line     0x00000000      0x489
+ .debug_line    0x00000000       0x3e ./init.o
+ .debug_line    0x0000003e      0x358 ./main.o
+ .debug_line    0x00000396       0x62 ./rutinas_asm.o
+ .debug_line    0x000003f8       0x91 ./trafo.o
+
+.debug_info     0x00000000      0x4e5
+ .debug_info    0x00000000       0x5c ./init.o
+ .debug_info    0x0000005c      0x215 ./main.o
+ .debug_info    0x00000271       0x63 ./rutinas_asm.o
+ .debug_info    0x000002d4      0x211 ./trafo.o
+
+.debug_abbrev   0x00000000      0x22a
+ .debug_abbrev  0x00000000       0x14 ./init.o
+ .debug_abbrev  0x00000014       0xfc ./main.o
+ .debug_abbrev  0x00000110       0x14 ./rutinas_asm.o
+ .debug_abbrev  0x00000124      0x106 ./trafo.o
+
+.debug_aranges  0x00000000       0x80
+ .debug_aranges
+                0x00000000       0x20 ./init.o
+ .debug_aranges
+                0x00000020       0x20 ./main.o
+ .debug_aranges
+                0x00000040       0x20 ./rutinas_asm.o
+ .debug_aranges
+                0x00000060       0x20 ./trafo.o
+
+.debug_macinfo  0x00000000     0x6cae
+ .debug_macinfo
+                0x00000000     0x4b87 ./main.o
+ .debug_macinfo
+                0x00004b87     0x2127 ./trafo.o
+
+.debug_loc      0x00000000      0x2bf
+ .debug_loc     0x00000000       0xa5 ./main.o
+ .debug_loc     0x000000a5      0x21a ./trafo.o
+
+.debug_pubnames
+                0x00000000       0xc9
+ .debug_pubnames
+                0x00000000       0x73 ./main.o
+ .debug_pubnames
+                0x00000073       0x56 ./trafo.o
+
+.debug_pubtypes
+                0x00000000       0x60
+ .debug_pubtypes
+                0x00000000       0x30 ./main.o
+ .debug_pubtypes
+                0x00000030       0x30 ./trafo.o
+
+.debug_str      0x00000000      0x157
+ .debug_str     0x00000000       0xf5 ./main.o
+                                0x12e (size before relaxing)
+ .debug_str     0x000000f5       0x62 ./trafo.o
+                                 0xc5 (size before relaxing)
+
+.debug_frame    0x00000000       0xec
+ .debug_frame   0x00000000       0x54 ./main.o
+ .debug_frame   0x00000054       0x98 ./trafo.o
